@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+   	 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>心鱼*大猫</title>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<script src="https://cdn.bootcss.com/moment.js/2.24.0/locale/zh-cn.js"></script>
+		<style>
+p{
+	margin-bottom: .2rem;
+}
+#dayList p{
+	margin-left: 1em;
+}	
+		</style>
+		<script type="text/javascript">
+$(document).ready(function(){
+	moment.locale('zh-cn');
+	var now = moment();
+	var startDay = moment('2019-02-06', 'YYYY-MM-DD'); 
+	$("#now").text(now.format("YYYY年MM月DD日 dddd"));
+	$('#diff').text(now.diff(startDay,'days'));
+	var spDays = getSpDays(startDay);
+	for(var i=0;i<spDays.length;i++){
+		var spDay = spDays[i];
+		var line;
+		if(spDay.day.isAfter(now)){
+			line = $('<p/>',{
+			'class' : "text-info",
+			'text' : spDay.txt + "（" + spDay.day.format("YYYY年MM月DD日 dddd")+"，还剩"+spDay.day.diff(now,'days')+"天）"
+			});
+		}else{
+			line = $('<p/>',{
+			'class' : "text-secondary",
+			'text' : spDay.txt + "（" + spDay.day.format("YYYY年MM月DD日 dddd")+"）"
+			});
+		}
+		$('#dayList').append(line);
+	}
+});
+function getSpDays(startDay){
+	var now = moment();
+	var spDays = [];
+	var addplus  = 0;
+	for(var i=1;;i++){
+		var tday = moment(startDay).add(30*i,"days");
+		if(tday.isAfter(now)){
+			addplus++;
+		}
+		if(addplus>5){
+			break;	
+		}
+		spDays.push({
+				"day" : tday,
+				"txt" : "第" + (30*i) + "天纪念日"
+		});
+	}
+	addplus  = 0;
+	for(var i=1;;i++){
+		var tday = moment(startDay).add(100*i,"days");
+		if(tday.isAfter(now)){
+			addplus++;
+		}
+		if(addplus>3){
+			break;	
+		}
+		spDays.push({
+				"day" : tday,
+				"txt" : "第" + (100*i) + "天纪念日"
+		});
+	}
+	addplus  = 0;
+	for(var i=0;;i++){
+		var tday = moment((2019+i)+'-02-14', 'YYYY-MM-DD');
+		if(tday.isAfter(now)){
+			addplus++;
+		}
+		if(addplus>2){
+			break;	
+		}
+		spDays.push({
+				"day" : tday,
+				"txt" : (2019+i) + "年情人节"
+		});
+	}
+	spDays.sort(function(a,b){
+		return a.day.isAfter(b.day) ? 1 : -1;
+	});
+	return spDays;
+}
+		</script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<p class="text-info">今天:<span id="now"></span></p>
+					<p class="text-info">距离在一起<span id="diff"></span>天</p>
+					<p class="text-info">日期列表:</p>
+					<div id="dayList"></div>
+				</div>
+			</div>
+		</div>	
+	</body>
+</html>
