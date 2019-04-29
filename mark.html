@@ -88,6 +88,20 @@ function getSpDays(startDay){
 	}
 	addplus  = 0;
 	for(var i=0;;i++){
+		var tday = moment((2019+i)+'-02-04', 'YYYY-MM-DD');
+		if(tday.isAfter(now)){
+			addplus++;
+		}
+		if(addplus>2){
+			break;	
+		}
+		spDays.push({
+				"day" : tday,
+				"txt" : (2019+i) + "年表白纪念日"
+		});
+	}
+	addplus  = 0;
+	for(var i=0;;i++){
 		var tday = moment((2019+i)+'-03-16', 'YYYY-MM-DD');
 		if(tday.isAfter(now)){
 			addplus++;
