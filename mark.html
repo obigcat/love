@@ -88,7 +88,7 @@ function getSpDays(startDay){
 	}
 	addplus  = 0;
 	for(var i=0;;i++){
-		var tday = moment((2019+i)+'-02-04', 'YYYY-MM-DD');
+		var tday = moment((2020+i)+'-02-04', 'YYYY-MM-DD');
 		if(tday.isAfter(now)){
 			addplus++;
 		}
@@ -97,12 +97,12 @@ function getSpDays(startDay){
 		}
 		spDays.push({
 				"day" : tday,
-				"txt" : (2019+i) + "年表白纪念日"
+				"txt" : (2020+i) + "年表白纪念日"
 		});
 	}
 	addplus  = 0;
 	for(var i=0;;i++){
-		var tday = moment((2019+i)+'-03-16', 'YYYY-MM-DD');
+		var tday = moment((2020+i)+'-03-16', 'YYYY-MM-DD');
 		if(tday.isAfter(now)){
 			addplus++;
 		}
@@ -111,7 +111,7 @@ function getSpDays(startDay){
 		}
 		spDays.push({
 				"day" : tday,
-				"txt" : (2019+i) + "年初吻纪念日"
+				"txt" : (2020+i) + "年初吻纪念日"
 		});
 	}
 	spDays.sort(function(a,b){
