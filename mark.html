@@ -86,6 +86,20 @@ function getSpDays(startDay){
 				"txt" : (2019+i) + "年情人节"
 		});
 	}
+	addplus  = 0;
+	for(var i=0;;i++){
+		var tday = moment((2019+i)+'-02-04', 'YYYY-MM-DD');
+		if(tday.isAfter(now)){
+			addplus++;
+		}
+		if(addplus>2){
+			break;	
+		}
+		spDays.push({
+				"day" : tday,
+				"txt" : (2019+i) + "年初吻纪念日"
+		});
+	}
 	spDays.sort(function(a,b){
 		return a.day.isAfter(b.day) ? 1 : -1;
 	});
