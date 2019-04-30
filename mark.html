@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,15 +7,48 @@
 		<title>心鱼*大猫</title>
 		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
-		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<script src="https://cdn.bootcss.com/moment.js/2.24.0/locale/zh-cn.js"></script>
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<style>
-p{
-	margin-bottom: .2rem;
+.container{
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	padding: 15px;
+	color: #6c757d;
 }
-#dayList p{
-	margin-left: 1em;
-}	
+p{
+	margin: .3em 0;
+}
+.text-info{
+   color: #17a2b8;
+}
+.text-red{
+   color: #C0392B;
+}
+#dayContainer{
+    display: table;
+    margin-left: 1em;
+}
+#dayShow{
+    display: table-row;
+}
+#dayLine{
+    display: table-cell;
+    background: #C0392B;
+    width: 4px;
+    border-radius: 2px;
+}
+#dayList{
+    display: table-cell;
+    padding-left: .3em;
+}
+#dayList > div{
+    margin-bottom: .3em;
+}
+.day-info{
+   margin-left: 1em;
+   font-size: .5em;
+   color: #6c757d;
+}
 		</style>
 		<script type="text/javascript">
 $(document).ready(function(){
@@ -28,92 +62,57 @@ $(document).ready(function(){
 		var spDay = spDays[i];
 		var line;
 		if(spDay.day.isAfter(now)){
-			line = $('<p/>',{
+			line = $('<div/>',{
 			'class' : "text-info",
-			'text' : spDay.txt + "（" + spDay.day.format("YYYY年MM月DD日 dddd")+"，还剩"+spDay.day.diff(now,'days')+"天）"
+			'text' : spDay.txt + "（剩"+spDay.day.diff(now,'days')+"天）"
 			});
+		
 		}else{
-			line = $('<p/>',{
+			line = $('<div/>',{
 			'class' : "text-secondary",
-			'text' : spDay.txt + "（" + spDay.day.format("YYYY年MM月DD日 dddd")+"）"
+			'text' : spDay.txt
 			});
 		}
+		if(spDay.star == 1){
+			line.prepend('<i class="fa fa-heart text-red" aria-hidden="true"></i>');	
+		}
+		var dayInfo = $('<div/>',{
+			'class' : 'text-secondary day-info',
+			'text' : spDay.day.format("YYYY年MM月DD日 dddd")
+		});
+		line.append(dayInfo);
 		$('#dayList').append(line);
 	}
 });
 function getSpDays(startDay){
 	var now = moment();
 	var spDays = [];
-	var addplus  = 0;
-	for(var i=1;;i++){
-		var tday = moment(startDay).add(30*i,"days");
-		if(tday.isAfter(now)){
-			addplus++;
+	var confessionDay = moment('2019-02-04', 'YYYY-MM-DD');
+	var kissDay = moment('2019-03-16', 'YYYY-MM-DD');
+	spDays.push({"day" : confessionDay,"txt" : "表白","star":1});
+	spDays.push({"day" : startDay, "txt" : "在一起","star":1});
+	spDays.push({"day" : kissDay, "txt" : "初吻","star":1});
+	var addDay = function(day,timeType,num,delayNum,getText){
+		var addplus  = 0;
+		for(var i=1;;i++){
+			var tday = moment(day).add(num*i,timeType);
+			if(tday.isAfter(now)){
+				addplus++;
+			}
+			if(addplus>delayNum){
+				break;	
+			}
+			spDays.push({
+					"day" : tday,
+					"txt" : getText(i)
+			});
 		}
-		if(addplus>5){
-			break;	
-		}
-		spDays.push({
-				"day" : tday,
-				"txt" : "第" + (30*i) + "天纪念日"
-		});
 	}
-	addplus  = 0;
-	for(var i=1;;i++){
-		var tday = moment(startDay).add(100*i,"days");
-		if(tday.isAfter(now)){
-			addplus++;
-		}
-		if(addplus>3){
-			break;	
-		}
-		spDays.push({
-				"day" : tday,
-				"txt" : "第" + (100*i) + "天纪念日"
-		});
-	}
-	addplus  = 0;
-	for(var i=0;;i++){
-		var tday = moment((2019+i)+'-02-14', 'YYYY-MM-DD');
-		if(tday.isAfter(now)){
-			addplus++;
-		}
-		if(addplus>2){
-			break;	
-		}
-		spDays.push({
-				"day" : tday,
-				"txt" : (2019+i) + "年情人节"
-		});
-	}
-	addplus  = 0;
-	for(var i=0;;i++){
-		var tday = moment((2020+i)+'-02-04', 'YYYY-MM-DD');
-		if(tday.isAfter(now)){
-			addplus++;
-		}
-		if(addplus>2){
-			break;	
-		}
-		spDays.push({
-				"day" : tday,
-				"txt" : (2020+i) + "年表白纪念日"
-		});
-	}
-	addplus  = 0;
-	for(var i=0;;i++){
-		var tday = moment((2020+i)+'-03-16', 'YYYY-MM-DD');
-		if(tday.isAfter(now)){
-			addplus++;
-		}
-		if(addplus>2){
-			break;	
-		}
-		spDays.push({
-				"day" : tday,
-				"txt" : (2020+i) + "年初吻纪念日"
-		});
-	}
+	addDay(startDay,"days",30,5,function(i){return "第" + (30*i) + "天纪念日";});
+	addDay(startDay,"days",100,3,function(i){return "第" + (100*i) + "天纪念日";});
+	addDay(moment('2018-02-14', 'YYYY-MM-DD'),"year",1,2,function(i){return (2018+i) + "年情人节";});
+	addDay(confessionDay,"year",1,2,function(i){return (2019+i) + "年表白纪念日";});
+	addDay(kissDay,"year",1,2,function(i){return (2019+i) + "年初吻纪念日";});
 	spDays.sort(function(a,b){
 		return a.day.isAfter(b.day) ? 1 : -1;
 	});
@@ -122,15 +121,17 @@ function getSpDays(startDay){
 		</script>
 	</head>
 	<body>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-12">
-					<p class="text-info">今天:<span id="now"></span></p>
-					<p class="text-info">距离在一起<span id="diff"></span>天</p>
-					<p class="text-info">日期列表:</p>
+		<div class="container">
+			<p class="text-info">今天：<span id="now"></span></p>
+			<p class="text-info">距离在一起<span id="diff" class="text-red"></span>天</p>
+			<p class="text-info">时间线：</p>
+			<div id="dayContainer">
+				<div id="dayShow">
+					<div id="dayLine"></div>
 					<div id="dayList"></div>
 				</div>
 			</div>
 		</div>	
 	</body>
 </html>
+
