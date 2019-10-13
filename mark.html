@@ -60,6 +60,9 @@ $(document).ready(function(){
 	var spDays = getSpDays(startDay);
 	for(var i=0;i<spDays.length;i++){
 		var spDay = spDays[i];
+		if(i !=0 && spDay.txt == spDays[i-1].txt){
+			continue;
+		}
 		var line;
 		if(spDay.day.isAfter(now)){
 			line = $('<div/>',{
