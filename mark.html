@@ -111,11 +111,11 @@ function getSpDays(startDay){
 			});
 		}
 	}
-	addDay(startDay,"days",30,5,function(i){return "第" + (30*i) + "天纪念日";});
-	addDay(startDay,"days",100,3,function(i){return "第" + (100*i) + "天纪念日";});
-	addDay(moment('2018-02-14', 'YYYY-MM-DD'),"year",1,2,function(i){return (2018+i) + "年情人节";});
-	addDay(confessionDay,"year",1,2,function(i){return (2019+i) + "年表白纪念日";});
-	addDay(kissDay,"year",1,2,function(i){return (2019+i) + "年初吻纪念日";});
+	addDay(startDay,"days",30,3,function(i){return "第" + (30*i) + "天纪念日";});
+	addDay(startDay,"days",100,2,function(i){return "第" + (100*i) + "天纪念日";});
+	addDay(moment('2018-02-14', 'YYYY-MM-DD'),"year",1,1,function(i){return (2018+i) + "年情人节";});
+	addDay(startDay,"year",1,1,function(i){return (2019+i) + "年在一起纪念日";});
+	addDay(kissDay,"year",1,1,function(i){return (2019+i) + "年初吻纪念日";});
 	spDays.sort(function(a,b){
 		return a.day.isAfter(b.day) ? 1 : -1;
 	});
